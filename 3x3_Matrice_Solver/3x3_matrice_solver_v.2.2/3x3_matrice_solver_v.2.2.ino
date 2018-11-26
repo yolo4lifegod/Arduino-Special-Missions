@@ -8,6 +8,7 @@
  * ********************************************************/
  
 // This project uses the library BasicLinearAlgebra.h developed by Tom Stewart (available in the file 3x3_Matrice_Solver)
+// Named as BasicLinearAlgebra-master.zip
 
 #include<BasicLinearAlgebra.h>
 using namespace BLA;
