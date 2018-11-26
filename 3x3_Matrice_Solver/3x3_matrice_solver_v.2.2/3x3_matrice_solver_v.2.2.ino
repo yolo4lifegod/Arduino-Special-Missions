@@ -7,14 +7,12 @@
  * Edited by Yash Saxena                                   *
  * ********************************************************/
  
-// This project uses the library BasicLinearAlgebra.h developed by Tom Stewart
-// https://github.com/tomstewart89/BasicLinearAlgebra
+// This project uses the library BasicLinearAlgebra.h developed by Tom Stewart (available in the file 3x3_Matrice_Solver)
 
-// Include the BLA library and use the corresponding namespace.
 #include<BasicLinearAlgebra.h>
 using namespace BLA;
-// Now, declare the matrices you will use
 
+// Declaration of matrices below
 BLA::Matrix<3,3> A; // Coefficient's matrix
 BLA::Matrix<3> B; // Independent terms vector
 BLA::Matrix<3,3> C; // Inverse Matrix
@@ -37,10 +35,10 @@ void setup() {
   B << 18,-24,-18;
   
   // Now find the Coefficient's matrix inverse 
-  C=A.Inverse();  
+  C = A.Inverse();  
   
   // Now, to finde the solution's vector, multiply C by the Independent terms' vector 
-  D=C*B;
+  D = C * B;
   
   // Now store the contents of the solution's vector into X, Y and Z variables.
   X=D(0,0);
@@ -54,8 +52,5 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
-
-
+  // No code to loop
 }
