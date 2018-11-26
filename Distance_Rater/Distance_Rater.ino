@@ -2,7 +2,7 @@
 // LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 int trigPin = 6;
 int echoPin = 7;
-int buzzer = 2
+int buzzer = 2;
 
 
 void setup() {
