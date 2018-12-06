@@ -14,8 +14,12 @@ int sensorPin = 7; // Tuning Microphone
 int microfeed = 0;
 int piezoPin = 8; // Tuner
 int potPin = 6; // Potentiometer
-int val = 0;
+int pval = 0;
+int condval = 0;
+int notenum = 0;
+int chromatic = 1;
 
+String note;
 boolean butpres = 0;
 
 void setup() {
@@ -32,5 +36,35 @@ void setup() {
 }
 
 void loop() {
-  butpres = read_button();
+  butpres = read_button(BUTTON_PIN);
+  Serial.println("_________");
+  Serial.println(butpres);
+  
+  pval = analogRead(potPin) / 96;
+  Serial.println(pval);
+  
+  notenum = pval % 12;
+  Serial.println(note);
+  
+  chromatic = (pval - note) / 12;
+  Serial.println(chromatic);
+  
+  Serial.println("_________");
+  
+  lcd.setCursor(1, 0);
+  while(butpres == 1){
+    if(chromatic == 1){
+      if(notenum == 0){
+        note = "C";
+      }elif(notenum == 1){
+        note = "C#";
+      }elif(notenum == 2){
+        note = "D";
+      }elif(notenum == 3){
+        note = "Eb";
+      }elif(notenum == 4){
+        note = "E";
+      }
+    }
+  }
 }
