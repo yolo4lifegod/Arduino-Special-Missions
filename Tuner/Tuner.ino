@@ -63,24 +63,31 @@ void loop() {
        lcd.setCursor(4, 0);
        lcd.print(chromatic);
        buzzval = 32.70;
+       
      }elif(notenum == 1){
        lcd.setCursor(1, 0);
        note = "C#";
        lcd.print(note);
        lcd.setCursor(4, 0);
        lcd.print(chromatic);
+       buzzval = 34.65;
+       
      }elif(notenum == 2){
        lcd.setCursor(1, 0);
        note = "D";
        lcd.print(note);
        lcd.setCursor(4, 0);
        lcd.print(chromatic);
+       buzzval = 36.71;
+       
      }elif(notenum == 3){
        lcd.setCursor(1, 0);
        note = "Eb";
        lcd.print(note);
        lcd.setCursor(4, 0);
        lcd.print(chromatic);
+       buzzval = 38.89;
+       
      }elif(notenum == 4){
        lcd.setCursor(1, 0);
        note = "E";
@@ -664,6 +671,6 @@ void loop() {
     }
   }
   while(butpres == 1){
-    
+    tone(BUTTON_PIN, buzzval);
   }
 }
