@@ -1,0 +1,138 @@
+/*
+ * Created by Yash Saxena
+ * Circuited by Ryan Campo
+ * Serial Monitor is useful for experimental environments.
+ * Runs only concert pitches.
+ * Microphone: https://randomnerdtutorials.com/guide-for-microphone-sound-sensor-with-arduino/
+ * Tuning Notes: https://www.seventhstring.com/resources/notefrequencies.html
+ */
+
+#define BUTTON_PIN 5
+
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+int sensorPin = 7; // Tuning Microphone
+int microfeed = 0;
+int piezoPin = 8; // Tuner
+int buzzval = 0;
+int potPin = 6; // Potentiometer
+int pval = 0;
+int condval = 0;
+int notenum = 0;
+int chromatic = 1;
+
+
+String note;
+boolean butpres = 0;
+
+void setup() {
+  Serial.begin(9600);
+  lcd.begin(16, 2);
+  pinMode(sensorPin, INPUT);
+  pinMode(piezoPin, OUTPUT);
+  pinMode(potPin, INPUT);
+  pinMode(BUTTON_PIN, INPUT);
+  digitalWrite(sensorPin, LOW);
+  digitalWrite(piezoPin, LOW);
+  digitalWrite(potPin, LOW);
+  digitalWrite(BUTTON_PIN, LOW);
+}
+
+void loop() {
+  butpres = read_button(BUTTON_PIN);
+  Serial.println("_________");
+  Serial.println(butpres);
+
+  pval = analogRead(potPin) / 96;
+  Serial.println(pval);
+
+  notenum = pval % 12;
+  Serial.println(note);
+
+  chromatic = (pval - note) / 12;
+  Serial.println(chromatic);
+
+  Serial.println("_________");
+
+  if(notenum == 0){
+    note = "C";
+    notefreq(note, chromatic);
+  }elif(notenum == 1){
+    note = "C#";
+    notefreq(note, chromatic);
+  }elif(notenum == 2){
+    note = "D";
+    notefreq(note, chromatic);
+  }elif(notenum == 3){
+    note = "Eb";
+    notefreq(note, chromatic);
+  }elif(notenum == 4){
+    note = "E";
+    notefreq(note, chromatic);
+  }elif(notenum == 5){
+    note = "F";
+    notefreq(note, chromatic);
+  }elif(notenum == 6){
+    note = "F#";
+    notefreq(note, chromatic);
+  }elif(notenum == 7){
+    note = "G";
+    notefreq(note, chromatic);
+  }elif(notenum == 8){
+    note = "G#";
+    notefreq(note, chromatic);
+  }elif(notenum = 9){
+    note = "A";
+    notefreq(note, chromatic);
+  }elif(notenum = 10){
+    note = "Bb";
+    notefreq(note, chromatic);
+  }elif(notenum = 11){
+    note = "B";
+    notefreq(note, chromatic);
+  }
+
+
+  while(butpres == 1){
+    tone(BUTTON_PIN, buzzval);
+  }
+}
+
+void notefreq(note, chromatic){
+  if(note = "C"){
+    buzzval = 32.7;
+  }elif(note = "C#"){
+    buzzval = 34.65;
+  }elif(note = "D"){
+    buzzval = 36.71;
+  }elif(note = "Eb"){
+    buzzval = 38.89;
+  }elif(note = "E"){
+    buzzval = 41.2;
+  }elif(note = "F"){
+    buzzval = 43.65;
+  }elif(note == "F#"){
+    buzzval = 46.25
+  }elif(note == "G"){
+    buzzval = 49;
+  }elif(note == "G#"){
+    buzzval = 51.91;
+  }elif(note == "A"){
+    buzzval = 55;
+  }elif(note == "Bb"){
+    buzzval = 58.27;
+  }elif(note == "B"){
+    buzzval = 61.74;
+  }else{
+    return 0;
+  }
+
+  lcd.setCursor(1, 0);
+  lcd.print(note);
+  lcd.setCursor(3, 0);
+  lcd.print(chromatic);
+
+  buzzval = buzzval * (2^^(chromatic - 1));
+}
