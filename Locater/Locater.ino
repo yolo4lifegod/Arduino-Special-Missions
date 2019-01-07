@@ -4,6 +4,8 @@
  * To conv. from polar to cartesian: https://github.com/sdumetz/coordinates
  *******************************************************/
 
+#include <coordinates.h>
+
 #define triggerpin 6
 #define echopin 7
 int maxdist = 200; // In centimeters. Change this to change range
