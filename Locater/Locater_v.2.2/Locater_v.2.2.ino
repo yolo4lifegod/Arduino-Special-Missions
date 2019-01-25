@@ -24,7 +24,7 @@ float disb = 0.0;
 
 const float pi = 3.14159265358979;
 
-Servo delvalle_servo;
+Servo myservo;
 
 void setup() {
   Serial.begin(9600);
@@ -34,8 +34,8 @@ void setup() {
   pinMode(trigPinb, OUTPUT);
   pinMode(echoPinb, INPUT);
   
-  delvalle_servo.attach(6);
-  delvalle_servo.write(0);
+  myservo.attach(6);
+  myservo.write(0);
 }
 
 void loop() {
@@ -65,7 +65,7 @@ void loop() {
   beta = atan(n);
   beta = beta*180/pi;
 
-  delvalle_servo.write(beta);
+  myservo.write(beta);
   delay(500);
 
   Serial.println("__________________________");
