@@ -22,7 +22,7 @@ float durb = 0.0;
 float disa = 0.0;
 float disb = 0.0;
 
-const float pi = 3.1415926535897932384626433832795028841971693993751058209749445923078164;
+const float pi = 3.14159265358979;
 
 Servo delvalle_servo;
 
