@@ -45,14 +45,16 @@ void loop() {
   if(disa >= 45 || disb >= 45){
     scan();
   }
-  Serial.println(disa);
-  Serial.println(disb);
+  
+  x = disa;
+  y = disb;
+  
   l = pow(y,2);
   m = pow(x,2);
   n = 0-((l-m-(pow(25.5,2))/(51*x)));
   theta = acos(n);
   l = (theta * 180) / pi;
-  n = double sin(double __l);
+  n = sin(l);
   a = x * n;
   a = a*180/pi;
   
@@ -67,7 +69,7 @@ void loop() {
   b = sqrt(n);
   
   n = a / e;
-  beta = double atan(double __n);
+  beta = atan(n);
   beta = (beta * 180) / pi;
 
   myservo.write(beta);
@@ -113,7 +115,7 @@ void scan(){
   delayMicroseconds(100);
   digitalWrite(trigPina, LOW);
   dura = pulseIn(echoPina, HIGH);
-  disa = dura * 330;
+  disa = (dura/2) / 29.1;
   
   // b ultrasonic
   digitalWrite(trigPinb, LOW);
@@ -124,6 +126,8 @@ void scan(){
   durb = pulseIn(echoPinb, HIGH);
   disb = (durb/2) / 29.1;
   
-  x = disa;
-  y = disb;
+  Serial.println("disa = ");
+  Serial.print(disa);
+  Serial.println("disb = ");
+  Serial.print(disb);
 }
