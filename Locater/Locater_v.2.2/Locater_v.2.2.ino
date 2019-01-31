@@ -10,6 +10,7 @@ float x = 0.0;
 float y = 0.0;
 float a = 0.0;
 float b = 0.0;
+float c = 0.0;
 float d = 0.0;
 float e = 0.0;
 float l = 0.0;
@@ -36,55 +37,14 @@ void setup() {
   pinMode(echoPinb, INPUT);
   
   myservo.attach(6);
-  myservo.write(0);
+  myservo.write(90);
+  delay(1000);
 }
+/////////////////////////////////////////////////////////////////////////////////////////
 
 void loop() {
-  long dura, disa, durb, disb;
   scan();
-  if(disa >= 45 || disb >= 45){
-    scan();
-  }
-  
-  x = disa;
-  y = disb;
-  
-  l = pow(y,2);
-  m = pow(x,2);
-  n = 0-((l-m-(pow(25.5,2))/(51*x)));
-  theta = acos(n);
-  l = (theta * 180) / pi;
-  n = sin(l);
-  a = x * n;
-  a = a*180/pi;
-  
-  l = pow(x,2);
-  m = pow(a,2);
-  n = l - m;
-  d = sqrt(n);
-  e = 12.75 - d;
-  l = pow(a,2);
-  m = pow(e,2);
-  n = l + m;
-  b = sqrt(n);
-  
-  n = a / e;
-  beta = atan(n);
-  beta = (beta * 180) / pi;
-
-  myservo.write(beta);
-  delay(500);
-
-  Serial.println("__________________________");
-  Serial.println(x);
-  Serial.println(y);
-  Serial.println(theta);
-  Serial.println(a);
-  Serial.println(d);
-  Serial.println(e);
-  Serial.println(b);
-  Serial.println(beta);
-  Serial.println("__________________________");
+  delay(1000);
 }
 
 /////////////////////////////////////////////////////////////////// FUNCTIONS /////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,8 +86,60 @@ void scan(){
   durb = pulseIn(echoPinb, HIGH);
   disb = (durb/2) / 29.1;
   
-  Serial.println("disa = ");
-  Serial.print(disa);
-  Serial.println("disb = ");
-  Serial.print(disb);
+  Serial.print("disa = ");
+  Serial.println(disa);
+  Serial.print("disb = ");
+  Serial.println(disb);
+  
+  delay(100);
+  
+  ///////////////////////////////////////////////////////////
+  
+  l = pow(disb,2);
+  m = pow(disa,2);
+  c = pow(25.5,2);
+  
+  // Solve for Theta
+  
+  n = 0-((l-m-c)/(51*disa));
+  theta = acos(n);
+  
+  //////////////////
+  
+  l = (theta * 180) / pi;
+  n = sin(l);
+  a = disa * n;
+  a = a*180/pi;
+  Serial.println(a);
+  
+  l = pow(disa,2);
+  m = pow(a,2);
+  n = l - m;
+  d = sqrt(n);
+  e = 12.75 - d;
+  l = pow(a,2);
+  m = pow(e,2);
+  n = l + m;
+  b = sqrt(n);
+  
+  n = a / e;
+  beta = atan(n);
+  beta = (beta * 180) / pi;
+
+  myservo.write(beta);
+  delay(5000);
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+  Serial.println("__________________________");
+  Serial.println(disa);//
+  Serial.println(disb);//
+  Serial.println(theta);//
+  Serial.println(c);//
+  Serial.println(a);//
+  Serial.println(d);
+  Serial.println(e);
+  Serial.println(b);
+  Serial.println(beta);
+  Serial.println("__________________________");
 }
