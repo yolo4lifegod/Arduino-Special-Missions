@@ -142,4 +142,9 @@ void scan(){
   Serial.println(b);
   Serial.println(beta);
   Serial.println("__________________________");
+  Serial.print("(");
+  Serial.println(a);
+  Serial.println(",");
+  Serial.println(e);
+  Serial.println(")");
 }
