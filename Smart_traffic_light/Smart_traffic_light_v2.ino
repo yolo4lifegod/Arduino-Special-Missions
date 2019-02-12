@@ -1,11 +1,16 @@
 #include<hcsr04>
+
 // include the NewPing library: https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home
 #include<NewPing.h>
+#define SONAR_NUM 2
 
+// Ultrasonic Ports
 #define tria 3
 #define echa 4
 #define trib 5
 #define echb 6
+
+// Traffic Light Ports
 #define reda 7
 #define redb 8
 #define yela 9
@@ -14,11 +19,21 @@
 #define greb 12
 
 int i = 0;
-float disa = 0;
-float disb = 0;
+double float disa = 201;
+double float disb = 201;
+
+NewPing sonar[SONAR-NUM} = {
+  NewPing(3, 4, 200), 
+  NewPing(5, 6, 200)
+};
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
+
+  pinMode(tria,OUTPUT);
+  pinMode(echa,INPUT);
+  pinMode(trib,OUTPUT);
+  pinMode(echb,INPUT);
   
   pinMode(reda,OUTPUT);
   pinMode(redb,OUTPUT);
@@ -30,16 +45,28 @@ void setup() {
 
 
 void loop() {
-  scan();
+  for (uint8_t i < SONAR_NUM; i++) {
+    
+  /*
+   * scana();
+   * scanb();
+   */
+  if(disa <= 200 && disb > 200) {
+    trafficseta();
+  }else if(disa > 200 && disb <= 200) {
+    trafficsetb();
+  }else{
+    norm();
+  }
 }
 
 void scana(){
-  NewPing(tria,echa,200);
+  NewPing(tria,echa,300);
   disa = sonar.ping_cm();
 }
 
 void scanb(){
-  NewPing(trib,echb.200);
+  NewPing(trib,echb,300);
   disb = sonar.ping_cm();
 }
 
@@ -69,7 +96,7 @@ void norm(){
   digitalWrite(redb,HIGH);
   delay(2000);
 
-  
+  /////////////////////////////////////////////////////////////////////
   digitalWrite(reda,LOW);
   digitalWrite(redb,HIGH);
   digitalWrite(yela,LOW);
@@ -90,4 +117,26 @@ void norm(){
 
   digitalWrite(reda,HIGH);
   delay(2000);
+}
+
+void trafficseta(){
+  digitalWrite(reda,LOW);
+  digitalWrite(redb,HIGH);
+  digitalWrite(yela,LOW);
+  digitalWrite(yelb,LOW);
+  digitalWrite(grea,HIGH);
+  digitalWrite(greb,LOW);
+
+  delay(5000);
+}
+
+void trafficsetb(){
+  digitalWrite(reda,HIGH);
+  digitalWrite(redb,LOW);
+  digitalWrite(yela,LOW);
+  digitalWrite(yelb,LOW);
+  digitalWrite(grea,LOW);
+  digitalWrite(greb,HIGH);
+
+  delay(5000);
 }
