@@ -23,8 +23,8 @@ double float disa = 201;
 double float disb = 201;
 
 NewPing sonar[SONAR-NUM} = {
-  NewPing(3, 4, 200), 
-  NewPing(5, 6, 200)
+  NewPing(3, 4, 300), 
+  NewPing(5, 6, 300)
 };
 
 void setup() {
@@ -45,8 +45,14 @@ void setup() {
 
 
 void loop() {
-  for (uint8_t i < SONAR_NUM; i++) {
-    
+  for (uint8_t i = 0; i < SONAR_NUM; i++) {
+    delay(50);
+    if(i = 0) {
+      disa = sonar[i].ping_cm();
+    }else if(i = 1) {
+      disb = sonar[i].ping_cm();
+    }
+  }
   /*
    * scana();
    * scanb();
