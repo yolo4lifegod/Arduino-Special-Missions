@@ -22,7 +22,7 @@ int i = 0;
 double float disa = 201;
 double float disb = 201;
 
-NewPing sonar[SONAR-NUM} = {
+NewPing sonar[SONAR_NUM} = {
   NewPing(3, 4, 300), 
   NewPing(5, 6, 300)
 };
@@ -66,6 +66,8 @@ void loop() {
   }
 }
 
+              
+/*
 void scana(){
   NewPing(tria,echa,300);
   disa = sonar.ping_cm();
@@ -75,6 +77,7 @@ void scanb(){
   NewPing(trib,echb,300);
   disb = sonar.ping_cm();
 }
+*/
 
 void norm(){
   while(i != 25){
