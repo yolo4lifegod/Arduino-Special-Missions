@@ -1,107 +1,77 @@
-#define trigPin 5
-#define echoPin 6
+#define triga 12
+#define echoa 11
 
-#define reda 7
-#define redb 8
-#define yela 9
-#define yelb 10
-#define grea 11
-#define greb 12
+float cmpers, mpers, mph;
+float disa, disb, n;
+bool speeding, forward;
 
-int i = 0;
-
-void setup() {
+void setup(){
   Serial.begin(9600);
-
-  pinMode(trigPin,OUTPUT);
-  pinMode(echoPin,INPUT);
-  
-  pinMode(reda,OUTPUT);
-  pinMode(redb,OUTPUT);
-  pinMode(yela,OUTPUT);
-  pinMode(yelb,OUTPUT);
-  pinMode(grea,OUTPUT);
-  pinMode(greb,OUTPUT);
+  pinMode(triga, OUTPUT);
+  pinMode(echoa, INPUT);
 }
 
-void loop() {
-  long duration, distance;
-  digitalWrite(trigPin,LOW);
-  delay(2);
-  digitalWrite(trigPin,HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin,LOW);
-  duration = pulseIn(echoPin,HIGH);
-  distance = duration * 34 / 2000;
+void loop(){
+  disa = scan();
+  Serial.println(disa);
+  Serial.println(" cm ; ");
+  Serial.print("disa");
+  delay(100);
+  disb = scan();
+  Serial.println(disb);
+  Serial.println(" cm ; ");
+  Serial.print("disb");
   
-  Serial.print(distance);
-  Serial.println(" cm; ");
+  n = disa - disb;
+  Serial.println(n);
+  Serial.print(" diff");
   
-  if(distance <= 100){
-    Serial.println("trafficset()");
-    trafficset();
+  cmpers = n * 10;
+  
+  if(mpers < 0){
+    forward = true;
+  }
+  if(mpers > 0){
+    forward = false;
+  }
+  if(mpers = 0){
+    forward = false;
+  }
+  
+  Serial.print(cmpers);
+  Serial.println(" cm/h");
+  
+  mpers = cmpers / 100;
+  Serial.print(mpers);
+  Serial.println(" m/s ; ");
+  if(forward = true){
+    Serial.print("forward");
   }else{
-    Serial.println("normal routine");
-    redlight();
-    greenlight();
+    Serial.print("backward");
   }
+  mph = mpers * 2.2369;
+  Serial.print(mph);
+  Serial.println(" mph");
+  Serial.print("___________________");
+  delay(500);
 }
 
-void trafficset(){
-  digitalWrite(reda,LOW);
-  digitalWrite(redb,HIGH);
-  digitalWrite(yela,LOW);
-  digitalWrite(yelb,LOW);
-  digitalWrite(grea,HIGH);
-  digitalWrite(greb,LOW);
-
-  delay(5000);
+float scan(){
+  long durationb, distanceb;
+  digitalWrite(triga,LOW);
+  delayMicroseconds(2);
+  digitalWrite(triga,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(triga,LOW);
+  durationb = pulseIn(echoa,HIGH);
+  distanceb = durationb * 34 / 2000;
+  return distanceb;
 }
 
-void redlight(){
-  Serial.print("redlight");
-  digitalWrite(reda,HIGH);
-  digitalWrite(redb,LOW);
-  digitalWrite(yela,LOW);
-  digitalWrite(yelb,LOW);
-  digitalWrite(grea,LOW);
-  digitalWrite(greb,HIGH);
-  delay(25000);
-
-  digitalWrite(greb,LOW);
-  i = 0;
-  while(i < 5){
-    digitalWrite(yelb,HIGH);
-    delay(500);
-    digitalWrite(yelb,LOW);
-    i = i + 1;
-    delay(500);
-  }
-
-  digitalWrite(redb,HIGH);
-  delay(2000);
-}
-
-void greenlight(){
-  Serial.print("greenlight");
-  digitalWrite(reda,LOW);
-  digitalWrite(redb,HIGH);
-  digitalWrite(yela,LOW);
-  digitalWrite(yelb,LOW);
-  digitalWrite(grea,HIGH);
-  digitalWrite(greb,LOW);
-  delay(25000);
-
-  digitalWrite(grea,LOW);
-  i = 0;
-  while(i < 5){
-    digitalWrite(yela,HIGH);
-    delay(500);
-    digitalWrite(yela,LOW);
-    i = i + 1;
-    delay(500);
-  }
-
-  digitalWrite(reda,HIGH);
-  delay(2000);
-}
+/*
+const uint64_t IMAGES[] = {
+  0xc3810000000081c3,
+  0x813c7e7e7e7e3c81
+};
+const int IMAGES_LEN = sizeof(IMAGES)/8;
+*/
