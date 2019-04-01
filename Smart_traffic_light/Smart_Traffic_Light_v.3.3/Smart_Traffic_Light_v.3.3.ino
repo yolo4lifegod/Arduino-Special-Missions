@@ -98,7 +98,7 @@ void loop(){
   Serial.print("___________________");
 
   if(speeding == true){
-    for(int j = 0; j <= 5; i++) {
+    for(int j = 0; j <= 5; j++) {
       drawScreen(S);
       delay(500);
       drawScreen(O);
